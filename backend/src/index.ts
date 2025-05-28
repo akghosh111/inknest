@@ -43,8 +43,38 @@ app.post('/api/v1/user/signup', async (c) => {
 })
 
 
-app.post('/api/v1/user/signin', (c) => {
-  return c.text('Hello Hono!')
+app.post('/api/v1/user/signin', async (c) => {
+  const body = await c.req.json();
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  try {
+      const user = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+        password: body.password,
+        
+      }
+    })
+    if (!user) {
+      c.status(403);
+      return c.json({
+        message: "Incorrect credentials"
+      })
+
+    }
+    const jwt = await sign({
+      id: user.id
+    }, c.env.JWT_SECRET)
+    return c.text(jwt)
+    
+  } catch (e) {
+    console.log(e);
+    c.status(411);
+    return c.text('Invalid')
+    
+  }
 })
 
 app.post('/api/v1/blog', (c) => {
