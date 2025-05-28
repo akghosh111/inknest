@@ -30,3 +30,6 @@ frontend/.turbo/
 
 # TypeScript
 **/*.tsbuildinfo
+
+# Cloudflare Wrangler config
+wrangler.jsonc
