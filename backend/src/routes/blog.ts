@@ -8,15 +8,29 @@ export const blogRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
     JWT_SECRET: string;
-  }
+  },
+  Variables : {
+		userId: string
+    }
 }>();
 
-// blogRouter.use("/*", (c, next)) => {
-//     next();
-// }
+blogRouter.use("/*", async (c, next) => {
+    const authHeader = c.req.header("Authorization") || "";
+    const user = await verify(authHeader, c.env.JWT_SECRET);
+    if(user) {
+        c.set("userId", user.id as string);
+        next();
+    } else {
+        c.status(403);
+        return c.json({
+            message: "You are not logged in!"
+        })
+    }
+});
 
 blogRouter.post('/', async (c) => {
     const body = await c.req.json();
+    const userId = c.get("userId");
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -24,7 +38,7 @@ blogRouter.post('/', async (c) => {
         data: {
             title: body.title,
             content: body.content,
-            authorId: "1"
+            authorId: userId
         }
     })
     return c.json({
