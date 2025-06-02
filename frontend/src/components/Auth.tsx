@@ -14,11 +14,11 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             <div>
                 <div className="px-10">
                     <div className="text-3xl font-extrabold">
-                        Create an account
+                       {type ==="signin" ? "Log in to your account" : "Create an account"}
                     </div>
-                    <div className="text-slate-500">
-                        Already have an account? 
-                        <Link className="pl-2 underline" to={"/signin"}>Login</Link>
+                    <div className="text-slate-500 text-center">
+                        {type === "signin"? "Don't have an account?": "Already have an account?"} 
+                        <Link className="pl-2 underline" to={type ==="signin" ? "/signup" : "/signin"}>{type === "signin" ? "Sign up" : "Sign in"}</Link>
                         
                     </div>
 
