@@ -13,7 +13,7 @@ export const BlogCard = ({
     publishedDate
 }:BlogCardProps) => {
   return (
-    <div>
+    <div className="border border-slate-200 pb-4">
       <div className="flex">
         <div className="flex justify-center flex-col">
 
@@ -22,32 +22,44 @@ export const BlogCard = ({
         <div className="font-light pl-2">
             {authorName}
         </div>
-            <div className="pl-2 font-thin">
+        <div className="flex justify-center flex-col pl-2">
+            <Circle/>
+        </div>
+        <div className="pl-2 font-thin text-slate-500">
                 
-                {publishedDate}
-            </div>
+            {publishedDate}
+        </div>
       </div>
-      <div>
+      <div className="text-xl font-semibold">
         {title}
       </div>
-      <div>
+      <div className="text-md font-thin">
         {/* add a check if the content is greater than 100 */}
-        {content.slice(0,100)+ "..."}
+        {content.slice(0,300)+ "..."}
       </div>
-      <div>
-        {`${Math.ceil(content.length / 100)} minutes`}
+      <div className="text-slate-500 text-sm font-thin">
+        {`${Math.ceil(content.length / 100)} minute(s) read`}
       </div>
-      <div className="bg-slate-200 h-1 w-full">
+      {/* <div className="bg-slate-200 h-1 w-full">
 
-      </div>
+      </div> */}
     </div>
   )
 }
 
+function Circle() {
+    return (
+        <div className="h-1 w-1 rounded-full bg-slate-400">
+
+        </div>
+    )
+}
+
+
 function Avatar({ name }: { name: string }) {
     return (
-        <div className="relative inline-flex items-center justify-center w-5 h-5 overflow-hidden bg-gray-200 rounded-full">
-            <span className="text-xs font-extralight text-gray-600">{name[0]}</span>
+        <div className="relative inline-flex items-center justify-center w-5 h-5 overflow-hidden bg-gray-600 rounded-full">
+            <span className="text-xs font-extralight text-gray-300">{name[0]}</span>
         </div>
     )
 }
