@@ -21,7 +21,7 @@ export const BlogCard = ({
         <div className="flex">
           
 
-          <Avatar name={authorName}/>
+          <Avatar size="small" name={authorName}/>
         
           <div className="font-light pl-2 text-sm flex justify-center flex-col">
               {authorName}
@@ -52,7 +52,7 @@ export const BlogCard = ({
   )
 }
 
-function Circle() {
+export function Circle() {
     return (
         <div className="h-1 w-1 rounded-full bg-slate-400">
 
